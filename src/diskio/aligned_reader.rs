@@ -481,9 +481,11 @@ mod tests {
         let temp_dir = TempDir::new().unwrap();
         let (file, test_data) = create_test_file(temp_dir.path(), "test.dat", 8192).unwrap();
 
-        let mut content = vec![0u8; 8192];
-        let read = pread_fd(file.as_raw_fd(), &mut content, 0).unwrap();
+        // O_DIRECT requires an aligned destination buffer; a plain Vec<u8> gets EINVAL.
+        let mut content = AlignedBuffer::new(8192, DIRECT_IO_ALIGNMENT).unwrap();
+        let read = pread_fd(file.as_raw_fd(), content.as_mut_slice(), 0).unwrap();
         assert_eq!(read, 8192);
+        assert_eq!(content.as_slice(), &test_data[..]);
 
         let mut reader = AlignedReader::from_fd(file).unwrap();
 
