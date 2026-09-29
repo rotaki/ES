@@ -11,3 +11,4 @@
 *.txt
 *.data
 *.dat
+.DS_Store
