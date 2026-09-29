@@ -10,4 +10,5 @@
 *.idx
 *.txt
 *.data
-*.dat.DS_Store
+*.dat
+.DS_Store
