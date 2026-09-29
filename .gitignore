@@ -10,4 +10,4 @@
 *.idx
 *.txt
 *.data
-*.dat
+*.dat.DS_Store
