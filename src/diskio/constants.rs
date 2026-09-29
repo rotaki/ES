@@ -169,12 +169,14 @@ mod tests {
     }
 
     #[test]
+    #[cfg(debug_assertions)] // the check is a debug_assert!, compiled out in release
     #[should_panic]
     fn test_align_up_non_power_of_two() {
         align_up(100, 513); // 513 is not a power of 2
     }
 
     #[test]
+    #[cfg(debug_assertions)] // the check is a debug_assert!, compiled out in release
     #[should_panic]
     fn test_align_down_non_power_of_two() {
         align_down(100, 513); // 513 is not a power of 2
